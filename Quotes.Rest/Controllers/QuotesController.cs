@@ -74,7 +74,7 @@ namespace Quotes.Rest.Controllers
                 return NotFound();
             }
 
-            return quote;
+            return Ok(quote);
 
         }
 
@@ -95,8 +95,6 @@ namespace Quotes.Rest.Controllers
             {
                 return NotFound(e.Message);
             }
-            
-
         }
 
     }
