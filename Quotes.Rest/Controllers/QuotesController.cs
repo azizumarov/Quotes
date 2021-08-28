@@ -29,20 +29,39 @@ namespace Quotes.Rest.Controllers
 
         
         [HttpGet]
-        public ActionResult<IEnumerable<Quote>> GetQuotes([FromQuery] int? skip, [FromQuery] int? take, [FromQuery] string author, [FromQuery] string category)
+        [SwaggerOperation(
+            Summary = "Get quotes by filter or random one - Summary",
+            Description = "Get quotes by filter or random one - Description",
+            OperationId = "GetQuotes",
+            Tags = new[] { "Quotes" }
+        )]
+        public ActionResult<IEnumerable<Quote>> GetQuotes(
+            [FromQuery] [SwaggerParameter(Description = "The number of elemets to skip", Required = false)] int? skip, 
+            [FromQuery] [SwaggerParameter(Description = "The number of elemets to take", Required = false)] int? take,
+            [FromQuery] [SwaggerParameter(Description = "Filter quote author", Required = false)] string author, 
+            [FromQuery] [SwaggerParameter(Description = "Filter quote category", Required = false)] string category,
+            [FromQuery] [SwaggerParameter(Description = "Get Random quote from filtered quotes", Required = true)] bool random = false)
         {
-            var quiotes = this.service.GetQuotes().Where(quote =>
-                    quote.Author.Contains(author ?? string.Empty)
-                    && quote.Category.Contains(category ?? string.Empty))
-                .Skip(skip ?? 0).Take(take ?? int.MaxValue);
-            return Ok(quiotes);
+            var quotes = this.service.GetQuotes(skip, take, author, category);
+
+            if (random)
+            {
+                quotes = new List<Quote>(){ quotes.ElementAt(new Random().Next(quotes.Count())) };
+            } 
+            if (quotes is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(quotes);
+            
         }
 
         
         [HttpGet("{id}")]
         [SwaggerOperation(
-            Summary = "Get's a quote by id - Summary",
-            Description = "Get's a quote by id - Description",
+            Summary = "Get a quote by id - Summary",
+            Description = "Get a quote by id - Description",
             OperationId = "GetQuote",
             Tags = new[] { "Quotes" }
         )]
@@ -56,6 +75,28 @@ namespace Quotes.Rest.Controllers
             }
 
             return quote;
+
+        }
+
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+            Summary = "Delete a quote by id - Summary",
+            Description = "Get a quote by id - Description",
+            OperationId = "DeleteQuote",
+            Tags = new[] { "Quotes" }
+        )]
+        public ActionResult DeleteQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)] Guid id)
+        {
+            try
+            {
+                this.service.DeleteQuote(id);
+                return Ok();
+            } catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+            
+
         }
 
     }

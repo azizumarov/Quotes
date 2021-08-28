@@ -2,6 +2,7 @@
 using Quotes.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Quotes.Core
@@ -19,9 +20,17 @@ namespace Quotes.Core
             return this.repository.GetQuote(id);
         }
 
-        public IEnumerable<Quote> GetQuotes()
+        public IEnumerable<Quote> GetQuotes(int? skip, int? take, string author, string category)
         {
-            return this.repository.GetQuotes();
+            return this.repository.GetQuotes().Where(quote =>
+                    quote.Author.Contains(author ?? string.Empty)
+                    && quote.Category.Contains(category ?? string.Empty))
+                .Skip(skip ?? 0).Take(take ?? int.MaxValue);
+        }
+
+        public void DeleteQuote(Guid id)
+        {
+            this.repository.DeleteQuote(id);
         }
     }
 }

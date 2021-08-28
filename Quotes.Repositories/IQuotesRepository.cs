@@ -9,5 +9,7 @@ namespace Quotes.Repositories
         IEnumerable<Quote> GetQuotes();
 
         Quote GetQuote(Guid id);
+
+        void DeleteQuote(Guid id);
     }
 }

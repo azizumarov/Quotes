@@ -16,12 +16,41 @@ namespace Quotes.Repositories
 
         public IEnumerable<Quote> GetQuotes()
         {
-            return list.Where(quote => !quote.Deleted);
+            var quotes = list.Where(quote => !quote.Deleted);
+            if (quotes != null)
+            {
+                return quotes;
+            }
+
+            throw new Exception("Quotes not found");
         }
 
         public Quote GetQuote(Guid id)
         {
-            return list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+            var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+
+            if (quote != null)
+            {
+                return quote; 
+            }
+                
+            throw new Exception("Quote not found");
+        }
+
+        public void DeleteQuote(Guid id)
+        {
+            var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+
+            if (quote != null)
+            {
+                quote.Deleted = true;
+                quote.DeletedOn = DateTime.Now;
+            } else
+            {
+                throw new Exception("Quote not found"); 
+            } 
+            
+
         }
     }
 }

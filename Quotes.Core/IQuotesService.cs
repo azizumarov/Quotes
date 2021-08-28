@@ -7,8 +7,10 @@ namespace Quotes.Core
     public interface IQuotesService
     {
 
-        IEnumerable<Quote> GetQuotes();
+        IEnumerable<Quote> GetQuotes(int? skip, int? take, string author, string category);
 
         Quote GetQuote(Guid id);
+
+        void DeleteQuote(Guid id);
     }
 }
