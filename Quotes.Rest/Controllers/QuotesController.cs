@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Quotes.Core;
 using Quotes.Models;
-using Quotes.Repositories;
+
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,23 @@ namespace Quotes.Rest.Controllers
 
         private readonly ILogger<QuotesController> logger;
 
-        private QuotesRepository repository;
+        private readonly IQuotesService service;
 
-        public QuotesController(ILogger<QuotesController> logger)
+        public QuotesController(IQuotesService service, ILogger<QuotesController> logger)
         {
             this.logger = logger;
-            this.repository = new QuotesRepository();
+            this.service = service;
         }
 
         
         [HttpGet]
-        public IEnumerable<Quote> GetQuotes([FromQuery] int? skip, [FromQuery] int? take, [FromQuery] string author, [FromQuery] string category)
+        public ActionResult<IEnumerable<Quote>> GetQuotes([FromQuery] int? skip, [FromQuery] int? take, [FromQuery] string author, [FromQuery] string category)
         {
-            return this.repository.GetQuotes().Where(quote => 
-                    quote.Author.Contains(author ?? string.Empty) 
+            var quiotes = this.service.GetQuotes().Where(quote =>
+                    quote.Author.Contains(author ?? string.Empty)
                     && quote.Category.Contains(category ?? string.Empty))
                 .Skip(skip ?? 0).Take(take ?? int.MaxValue);
+            return Ok(quiotes);
         }
 
         
@@ -44,9 +46,16 @@ namespace Quotes.Rest.Controllers
             OperationId = "GetQuote",
             Tags = new[] { "Quotes" }
         )]
-        public Quote GetQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)]  Guid id)
+        public ActionResult<Quote> GetQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)]  Guid id)
         {
-            return this.repository.GetQuote(id);
+            var quote = this.service.GetQuote(id);
+
+            if (quote is null)
+            {
+                return NotFound();
+            }
+
+            return quote;
         }
 
     }

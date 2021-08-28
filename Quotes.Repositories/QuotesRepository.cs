@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Quotes.Repositories
 {
-    public class QuotesRepository
+    public class QuotesRepository:IQuotesRepository
     {
         private readonly IList<Quote> list = new List<Quote>()
         {

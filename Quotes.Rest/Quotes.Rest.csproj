@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Quotes.Core\Quotes.Core.csproj" />
     <ProjectReference Include="..\Quotes.Models\Quotes.Models.csproj" />
-    <ProjectReference Include="..\Quotes.Repositories\Quotes.Repositories.csproj" />
   </ItemGroup>
 
 
