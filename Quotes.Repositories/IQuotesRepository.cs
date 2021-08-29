@@ -12,7 +12,7 @@ namespace Quotes.Repositories
 
         void CreateQuote(Quote quote);
 
-        void UpdateQuote(Guid id, Quote quote);
+        void UpdateQuote(Quote quote);
 
         void DeleteQuote(Guid id);
 

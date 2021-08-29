@@ -33,9 +33,9 @@ namespace Quotes.Core
             this.repository.CreateQuote(quote);
         }
 
-        public void UpdateQuote(Guid id, Quote quote)
+        public void UpdateQuote(Quote quote)
         {
-            this.repository.UpdateQuote(id, quote);
+            this.repository.UpdateQuote(quote);
         }
         
         public void DeleteQuote(Guid id)

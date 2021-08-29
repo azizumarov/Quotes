@@ -42,9 +42,9 @@ namespace Quotes.Repositories
             list.Add(quote);
         }
 
-        public void UpdateQuote(Guid id, Quote quote)
+        public void UpdateQuote(Quote quote)
         {
-            var quoteOld = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+            var quoteOld = list.Where(q => !q.Deleted && quote.Id == q.Id).FirstOrDefault();
 
             if (quoteOld != null)
             {
