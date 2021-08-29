@@ -78,6 +78,46 @@ namespace Quotes.Rest.Controllers
 
         }
 
+        [HttpPost]
+        [SwaggerOperation(
+            Summary = "Create a quote - Summary",
+            Description = "Create a quote - Description",
+            OperationId = "CreateQuote",
+            Tags = new[] { "Quotes" }
+        )]
+        public ActionResult CreateQuote([FromBody] Quote quote)
+        {
+            try
+            {
+                this.service.CreateQuote(quote);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        [SwaggerOperation(
+            Summary = "Update a quote by id - Summary",
+            Description = "Update a quote by id - Description",
+            OperationId = "UpdateQuote",
+            Tags = new[] { "Quotes" }
+        )]
+        public ActionResult UpdateQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)] Guid id, [FromBody] Quote quote)
+        {
+            try
+            {
+                this.service.UpdateQuote(id, quote);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         [SwaggerOperation(
             Summary = "Delete a quote by id - Summary",

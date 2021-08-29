@@ -11,6 +11,11 @@ namespace Quotes.Core
 
         Quote GetQuote(Guid id);
 
+        void CreateQuote(Quote quote);
+
+        void UpdateQuote(Guid id, Quote quote);
+
         void DeleteQuote(Guid id);
+
     }
 }

@@ -37,6 +37,29 @@ namespace Quotes.Repositories
             throw new Exception("Quote not found");
         }
 
+        public void CreateQuote(Quote quote)
+        {
+            list.Add(quote);
+        }
+
+        public void UpdateQuote(Guid id, Quote quote)
+        {
+            var quoteOld = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+
+            if (quoteOld != null)
+            {
+                quoteOld.Author = quote.Author;
+                quoteOld.Category = quote.Category;
+                quoteOld.Value = quote.Value;
+                quoteOld.Modified = true;
+                quoteOld.ModifiedOn = DateTime.Now;
+            }
+            else
+            {
+                throw new Exception("Quote not found");
+            }
+        }
+
         public void DeleteQuote(Guid id)
         {
             var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
@@ -45,12 +68,11 @@ namespace Quotes.Repositories
             {
                 quote.Deleted = true;
                 quote.DeletedOn = DateTime.Now;
-            } else
+            }
+            else
             {
-                throw new Exception("Quote not found"); 
-            } 
-            
-
+                throw new Exception("Quote not found");
+            }
         }
     }
 }

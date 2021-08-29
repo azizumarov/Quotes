@@ -27,10 +27,21 @@ namespace Quotes.Core
                     && quote.Category.Contains(category ?? string.Empty))
                 .Skip(skip ?? 0).Take(take ?? int.MaxValue);
         }
+        
+        public void CreateQuote(Quote quote)
+        {
+            this.repository.CreateQuote(quote);
+        }
 
+        public void UpdateQuote(Guid id, Quote quote)
+        {
+            this.repository.UpdateQuote(id, quote);
+        }
+        
         public void DeleteQuote(Guid id)
         {
             this.repository.DeleteQuote(id);
         }
+
     }
 }
