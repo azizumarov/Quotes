@@ -10,7 +10,7 @@ namespace Quotes.Repositories
 
         Quote GetQuote(Guid id);
 
-        void CreateQuote(Quote quote);
+        Quote CreateQuote(string author, string value, string category);
 
         void UpdateQuote(Quote quote);
 

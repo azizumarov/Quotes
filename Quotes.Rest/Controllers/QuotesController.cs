@@ -89,16 +89,7 @@ namespace Quotes.Rest.Controllers
         {
             try
             {
-                var newQuote = new Quote
-                {
-                    Id = Guid.NewGuid(),
-                    Author = quote.Author,
-                    Category = quote.Category,
-                    Value = quote.Quote,
-                    CreateOn = DateTime.Now
-                };
-
-                this.service.CreateQuote(newQuote);
+                var newQuote = this.service.CreateQuote(quote.Author, quote.Quote, quote.Category);
 
                 return CreatedAtAction(nameof(GetQuote), new { Id = newQuote.Id }, newQuote.AsDto());
             }

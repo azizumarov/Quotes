@@ -37,9 +37,11 @@ namespace Quotes.Repositories
             throw new Exception("Quote not found");
         }
 
-        public void CreateQuote(Quote quote)
+        public Quote CreateQuote(string author, string value, string category)
         {
-            list.Add(quote);
+            var newQoute = new Quote {Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now };
+            list.Add(newQoute);
+            return newQoute;
         }
 
         public void UpdateQuote(Quote quote)

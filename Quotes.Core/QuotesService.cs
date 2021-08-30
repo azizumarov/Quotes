@@ -28,9 +28,9 @@ namespace Quotes.Core
                 .Skip(skip ?? 0).Take(take ?? int.MaxValue);
         }
         
-        public void CreateQuote(Quote quote)
+        public Quote CreateQuote(string author, string quote, string category)
         {
-            this.repository.CreateQuote(quote);
+            return this.repository.CreateQuote(author, quote, category);
         }
 
         public void UpdateQuote(Quote quote)

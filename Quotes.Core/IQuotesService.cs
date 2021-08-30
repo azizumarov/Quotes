@@ -11,7 +11,7 @@ namespace Quotes.Core
 
         Quote GetQuote(Guid id);
 
-        void CreateQuote(Quote quote);
+        Quote CreateQuote(string author, string quote, string category);
 
         void UpdateQuote(Quote quote);
 
