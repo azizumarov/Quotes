@@ -35,14 +35,14 @@ namespace Quotes.Rest.Controllers
             OperationId = "GetQuotes",
             Tags = new[] { "Quotes" }
         )]
-        public async Task<ActionResult<IEnumerable<QuoteDto>>> GetQuotes(
+        public async Task<ActionResult<IEnumerable<QuoteDto>>> GetQuotesAsync(
             [FromQuery] [SwaggerParameter(Description = "The number of elemets to skip", Required = false)] int? skip, 
             [FromQuery] [SwaggerParameter(Description = "The number of elemets to take", Required = false)] int? take,
             [FromQuery] [SwaggerParameter(Description = "Filter quote author", Required = false)] string author, 
             [FromQuery] [SwaggerParameter(Description = "Filter quote category", Required = false)] string category,
             [FromQuery] [SwaggerParameter(Description = "Get Random quote from filtered quotes", Required = true)] bool random = false)
         {
-            var quotes = (await this.service.GetQuotes(skip, take, author, category)).Select(quote=> quote.AsDto());
+            var quotes = (await this.service.GetQuotesAsync(skip, take, author, category)).Select(quote=> quote.AsDto());
 
             if (random)
             {
@@ -65,9 +65,9 @@ namespace Quotes.Rest.Controllers
             OperationId = "GetQuote",
             Tags = new[] { "Quotes" }
         )]
-        public async Task<ActionResult<QuoteDto>> GetQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)]  Guid id)
+        public async Task<ActionResult<QuoteDto>> GetQuoteAsync([SwaggerParameter(Description = "Requested quote ID", Required = true)]  Guid id)
         {
-            var quote = (await this.service.GetQuote(id)).AsDto();
+            var quote = (await this.service.GetQuoteAsync(id)).AsDto();
 
             if (quote is null)
             {
@@ -85,15 +85,15 @@ namespace Quotes.Rest.Controllers
             OperationId = "CreateQuote",
             Tags = new[] { "Quotes" }
         )]
-        public async Task<ActionResult<QuoteDto>> CreateQuote([FromBody] CreateQuoteDto quote)
+        public async Task<ActionResult<QuoteDto>> CreateQuoteAsync([FromBody] CreateQuoteDto quote)
         {
             try
             {
-                var newQuote = await this.service.CreateQuote(quote.Author, quote.Quote, quote.Category);
+                var newQuote = await this.service.CreateQuoteAsync(quote.Author, quote.Quote, quote.Category);
 
-                return CreatedAtAction(nameof(GetQuote), new { Id = newQuote.Id }, newQuote.AsDto());
+                return CreatedAtAction(nameof(GetQuoteAsync), new { Id = newQuote.Id }, newQuote.AsDto());
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 return Problem(e.Message);
             }
@@ -106,14 +106,14 @@ namespace Quotes.Rest.Controllers
             OperationId = "UpdateQuote",
             Tags = new[] { "Quotes" }
         )]
-        public async Task<ActionResult> UpdateQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)] Guid id, [FromBody] UpdateQuoteDto quote)
+        public async Task<ActionResult> UpdateQuoteAsync([SwaggerParameter(Description = "Requested quote ID", Required = true)] Guid id, [FromBody] UpdateQuoteDto quote)
         {
             try
             {
-                var quoteOld = await this.service.GetQuote(id);
+                var quoteOld = await this.service.GetQuoteAsync(id);
                 quoteOld.Category = quote.Category;
                 quoteOld.Value = quote.Quote;
-                await this.service.UpdateQuote(quoteOld);
+                await this.service.UpdateQuoteAsync(quoteOld);
                 return NoContent();
             }
             catch (Exception e)
@@ -129,11 +129,11 @@ namespace Quotes.Rest.Controllers
             OperationId = "DeleteQuote",
             Tags = new[] { "Quotes" }
         )]
-        public async Task<ActionResult> DeleteQuote([SwaggerParameter(Description = "Requested quote ID", Required = true)] Guid id)
+        public async Task<ActionResult> DeleteQuoteAsync([SwaggerParameter(Description = "Requested quote ID", Required = true)] Guid id)
         {
             try
             {
-                await this .service.DeleteQuote(id);
+                await this .service.DeleteQuoteAsync(id);
                 return NoContent();
             } catch (Exception e)
             {

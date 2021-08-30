@@ -10,6 +10,7 @@ namespace Quotes.Core
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IQuotesService, QuotesService>();
+            services.AddHostedService<QuoteDeleteService>();
         }
     }
 }

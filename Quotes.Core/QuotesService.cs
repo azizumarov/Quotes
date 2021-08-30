@@ -16,32 +16,32 @@ namespace Quotes.Core
         {
             this.repository = repository;
         }
-        public async Task<Quote> GetQuote(Guid id)
+        public async Task<Quote> GetQuoteAsync(Guid id)
         {
-            return await this.repository.GetQuote(id);
+            return await this.repository.GetQuoteAsync(id);
         }
 
-        public async Task<IEnumerable<Quote>> GetQuotes(int? skip, int? take, string author, string category)
+        public async Task<IEnumerable<Quote>> GetQuotesAsync(int? skip, int? take, string author, string category)
         {
-            return (await this.repository.GetQuotes()).Where(quote =>
+            return (await this.repository.GetQuotesAsync()).Where(quote =>
                     quote.Author.Contains(author ?? string.Empty)
                     && quote.Category.Contains(category ?? string.Empty))
                 .Skip(skip ?? 0).Take(take ?? int.MaxValue);
         }
         
-        public async Task<Quote> CreateQuote(string author, string quote, string category)
+        public async Task<Quote> CreateQuoteAsync(string author, string quote, string category)
         {
-            return await this.repository.CreateQuote(author, quote, category);
+            return await this.repository.CreateQuoteAsync(author, quote, category);
         }
 
-        public async Task UpdateQuote(Quote quote)
+        public async Task UpdateQuoteAsync(Quote quote)
         {
-            await this.repository.UpdateQuote(quote);
+            await this.repository.UpdateQuoteAsync(quote);
         }
         
-        public async Task DeleteQuote(Guid id)
+        public async Task DeleteQuoteAsync(Guid id)
         {
-            await this.repository.DeleteQuote(id);
+            await this.repository.DeleteQuoteAsync(id);
         }
 
     }
