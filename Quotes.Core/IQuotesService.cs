@@ -8,15 +8,15 @@ namespace Quotes.Core
     public interface IQuotesService
     {
 
-        Task<IEnumerable<Quote>> GetQuotes(int? skip, int? take, string author, string category);
+        Task<IEnumerable<Quote>> GetQuotesAsync(int? skip, int? take, string author, string category);
 
-        Task<Quote> GetQuote(Guid id);
+        Task<Quote> GetQuoteAsync(Guid id);
 
-        Task<Quote> CreateQuote(string author, string quote, string category);
+        Task<Quote> CreateQuoteAsync(string author, string quote, string category);
 
-        Task UpdateQuote(Quote quote);
+        Task UpdateQuoteAsync(Quote quote);
 
-        Task DeleteQuote(Guid id);
+        Task DeleteQuoteAsync(Guid id);
 
     }
 }

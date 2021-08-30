@@ -7,15 +7,15 @@ namespace Quotes.Repositories
 {
     public interface IQuotesRepository
     {
-        Task<IEnumerable<Quote>> GetQuotes();
+        Task<IEnumerable<Quote>> GetQuotesAsync();
 
-        Task<Quote> GetQuote(Guid id);
+        Task<Quote> GetQuoteAsync(Guid id);
 
-        Task<Quote> CreateQuote(string author, string value, string category);
+        Task<Quote> CreateQuoteAsync(string author, string value, string category);
 
-        Task UpdateQuote(Quote quote);
+        Task UpdateQuoteAsync(Quote quote);
 
-        Task DeleteQuote(Guid id);
+        Task DeleteQuoteAsync(Guid id);
 
     }
 }
