@@ -1,21 +1,22 @@
 ﻿using Quotes.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Quotes.Core
 {
     public interface IQuotesService
     {
 
-        IEnumerable<Quote> GetQuotes(int? skip, int? take, string author, string category);
+        Task<IEnumerable<Quote>> GetQuotes(int? skip, int? take, string author, string category);
 
-        Quote GetQuote(Guid id);
+        Task<Quote> GetQuote(Guid id);
 
-        Quote CreateQuote(string author, string quote, string category);
+        Task<Quote> CreateQuote(string author, string quote, string category);
 
-        void UpdateQuote(Quote quote);
+        Task UpdateQuote(Quote quote);
 
-        void DeleteQuote(Guid id);
+        Task DeleteQuote(Guid id);
 
     }
 }
