@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Quotes.Core
 {
@@ -15,32 +16,32 @@ namespace Quotes.Core
         {
             this.repository = repository;
         }
-        public Quote GetQuote(Guid id)
+        public async Task<Quote> GetQuote(Guid id)
         {
-            return this.repository.GetQuote(id);
+            return await this.repository.GetQuote(id);
         }
 
-        public IEnumerable<Quote> GetQuotes(int? skip, int? take, string author, string category)
+        public async Task<IEnumerable<Quote>> GetQuotes(int? skip, int? take, string author, string category)
         {
-            return this.repository.GetQuotes().Where(quote =>
+            return (await this.repository.GetQuotes()).Where(quote =>
                     quote.Author.Contains(author ?? string.Empty)
                     && quote.Category.Contains(category ?? string.Empty))
                 .Skip(skip ?? 0).Take(take ?? int.MaxValue);
         }
         
-        public void CreateQuote(Quote quote)
+        public async Task<Quote> CreateQuote(string author, string quote, string category)
         {
-            this.repository.CreateQuote(quote);
+            return await this.repository.CreateQuote(author, quote, category);
         }
 
-        public void UpdateQuote(Quote quote)
+        public async Task UpdateQuote(Quote quote)
         {
-            this.repository.UpdateQuote(quote);
+            await this.repository.UpdateQuote(quote);
         }
         
-        public void DeleteQuote(Guid id)
+        public async Task DeleteQuote(Guid id)
         {
-            this.repository.DeleteQuote(id);
+            await this.repository.DeleteQuote(id);
         }
 
     }

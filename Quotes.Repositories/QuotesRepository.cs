@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Quotes.Repositories
 {
@@ -14,35 +15,37 @@ namespace Quotes.Repositories
             new Quote(){ Id = Guid.NewGuid(), Author="Author 3", Value="some quote 3", Category = "Category 3", CreateOn = DateTime.Now, Deleted = false }
         };
 
-        public IEnumerable<Quote> GetQuotes()
+        public async Task<IEnumerable<Quote>> GetQuotes()
         {
             var quotes = list.Where(quote => !quote.Deleted);
             if (quotes != null)
             {
-                return quotes;
+                return  await Task.FromResult(quotes);
             }
 
             throw new Exception("Quotes not found");
         }
 
-        public Quote GetQuote(Guid id)
+        public async Task<Quote> GetQuote(Guid id)
         {
             var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
 
             if (quote != null)
             {
-                return quote; 
+                return await Task.FromResult(quote); 
             }
                 
             throw new Exception("Quote not found");
         }
 
-        public void CreateQuote(Quote quote)
+        public async Task<Quote> CreateQuote(string author, string value, string category)
         {
-            list.Add(quote);
+            var newQoute = new Quote {Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now };
+            list.Add(newQoute);
+            return await Task.FromResult(newQoute);
         }
 
-        public void UpdateQuote(Quote quote)
+        public async Task UpdateQuote(Quote quote)
         {
             var quoteOld = list.Where(q => !q.Deleted && quote.Id == q.Id).FirstOrDefault();
 
@@ -58,9 +61,11 @@ namespace Quotes.Repositories
             {
                 throw new Exception("Quote not found");
             }
+
+            await Task.CompletedTask;
         }
 
-        public void DeleteQuote(Guid id)
+        public async Task DeleteQuote(Guid id)
         {
             var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
 
@@ -73,6 +78,8 @@ namespace Quotes.Repositories
             {
                 throw new Exception("Quote not found");
             }
+
+            await Task.CompletedTask;
         }
     }
 }
