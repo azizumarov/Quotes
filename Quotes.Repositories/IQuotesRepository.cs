@@ -16,6 +16,5 @@ namespace Quotes.Repositories
         Task UpdateQuoteAsync(Quote quote);
 
         Task DeleteQuoteAsync(Guid id);
-
     }
 }

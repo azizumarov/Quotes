@@ -1,12 +1,13 @@
 ﻿using Quotes.Models;
+using Quotes.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Quotes.Repositories
+namespace Quotes.Core.Test.Mocks
 {
-    public class QuotesRepository : IQuotesRepository
+    internal class QuotesRepositoryMock : IQuotesRepository
     {
         private readonly IList<Quote> _list = new List<Quote>()
         {
@@ -48,7 +49,7 @@ namespace Quotes.Repositories
         public async Task<Quote> CreateQuoteAsync(string author, string value, string category)
         {
             var newQuote = new Quote
-                {Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now};
+            { Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now };
             _list.Add(newQuote);
             return await Task.FromResult(newQuote);
         }

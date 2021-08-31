@@ -7,7 +7,6 @@ namespace Quotes.Core
 {
     public interface IQuotesService
     {
-
         Task<IEnumerable<Quote>> GetQuotesAsync(int? skip, int? take, string author, string category);
 
         Task<Quote> GetQuoteAsync(Guid id);
@@ -17,6 +16,5 @@ namespace Quotes.Core
         Task UpdateQuoteAsync(Quote quote);
 
         Task DeleteQuoteAsync(Guid id);
-
     }
 }
