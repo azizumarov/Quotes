@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quotes.Repositories
 {
-    public class QuotesRepository:IQuotesRepository
+    public class QuotesRepository : IQuotesRepository
     {
         private readonly IList<Quote> list = new List<Quote>()
         {
@@ -20,7 +20,7 @@ namespace Quotes.Repositories
             var quotes = list.Where(quote => !quote.Deleted);
             if (quotes != null)
             {
-                return  await Task.FromResult(quotes);
+                return await Task.FromResult(quotes);
             }
 
             throw new Exception("Quotes not found");
@@ -32,15 +32,15 @@ namespace Quotes.Repositories
 
             if (quote != null)
             {
-                return await Task.FromResult(quote); 
+                return await Task.FromResult(quote);
             }
-                
+
             throw new Exception("Quote not found");
         }
 
         public async Task<Quote> CreateQuoteAsync(string author, string value, string category)
         {
-            var newQoute = new Quote {Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now };
+            var newQoute = new Quote { Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now };
             list.Add(newQoute);
             return await Task.FromResult(newQoute);
         }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,9 +9,9 @@ namespace Quotes.Core
 {
     public class QuoteDeleteService : IHostedService, IDisposable
     {
-        ILogger<QuoteDeleteService> logger;
+        private readonly ILogger<QuoteDeleteService> logger;
         private Timer timer;
-        IQuotesService quotesService;
+        private readonly IQuotesService quotesService;
 
         public QuoteDeleteService(IQuotesService quotesService, ILogger<QuoteDeleteService> logger)
         {
@@ -37,7 +35,7 @@ namespace Quotes.Core
             this.logger.LogInformation("Timed Hosted Service is working");
             var quotes = (await this.quotesService.GetQuotesAsync(null, null, string.Empty, string.Empty))
                 .Where(quote => quote.CreateOn < DateTime.Now.AddDays(-1));
-            foreach(var quote in quotes)
+            foreach (var quote in quotes)
             {
                 await this.quotesService.DeleteQuoteAsync(quote.Id);
             }
