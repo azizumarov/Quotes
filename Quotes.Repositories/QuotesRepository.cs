@@ -8,27 +8,34 @@ namespace Quotes.Repositories
 {
     public class QuotesRepository : IQuotesRepository
     {
-        private readonly IList<Quote> list = new List<Quote>()
+        private readonly IList<Quote> _list = new List<Quote>()
         {
-            new Quote(){ Id = Guid.NewGuid(), Author="Author 1", Value="some quote 1", Category = "Category 1", CreateOn = DateTime.Now, Deleted = false },
-            new Quote(){ Id = Guid.NewGuid(), Author="Author 2", Value="some quote 2", Category = "Category 2", CreateOn = DateTime.Now, Deleted = false },
-            new Quote(){ Id = Guid.NewGuid(), Author="Author 3", Value="some quote 3", Category = "Category 3", CreateOn = DateTime.Now.AddDays(-2), Deleted = false }
+            new Quote()
+            {
+                Id = Guid.NewGuid(), Author = "Author 1", Value = "some quote 1", Category = "Category 1",
+                CreateOn = DateTime.Now, Deleted = false
+            },
+            new Quote()
+            {
+                Id = Guid.NewGuid(), Author = "Author 2", Value = "some quote 2", Category = "Category 2",
+                CreateOn = DateTime.Now, Deleted = false
+            },
+            new Quote()
+            {
+                Id = Guid.NewGuid(), Author = "Author 3", Value = "some quote 3", Category = "Category 3",
+                CreateOn = DateTime.Now.AddDays(-2), Deleted = false
+            }
         };
 
         public async Task<IEnumerable<Quote>> GetQuotesAsync()
         {
-            var quotes = list.Where(quote => !quote.Deleted);
-            if (quotes != null)
-            {
-                return await Task.FromResult(quotes);
-            }
-
-            throw new Exception("Quotes not found");
+            var quotes = _list.Where(quote => !quote.Deleted);
+            return await Task.FromResult(quotes);
         }
 
         public async Task<Quote> GetQuoteAsync(Guid id)
         {
-            var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+            var quote = _list.FirstOrDefault(quote => !quote.Deleted && quote.Id == id);
 
             if (quote != null)
             {
@@ -40,14 +47,15 @@ namespace Quotes.Repositories
 
         public async Task<Quote> CreateQuoteAsync(string author, string value, string category)
         {
-            var newQoute = new Quote { Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now };
-            list.Add(newQoute);
-            return await Task.FromResult(newQoute);
+            var newQuote = new Quote
+                {Id = Guid.NewGuid(), Author = author, Value = value, Category = category, CreateOn = DateTime.Now};
+            _list.Add(newQuote);
+            return await Task.FromResult(newQuote);
         }
 
         public async Task UpdateQuoteAsync(Quote quote)
         {
-            var quoteOld = list.Where(q => !q.Deleted && quote.Id == q.Id).FirstOrDefault();
+            var quoteOld = _list.FirstOrDefault(q => !q.Deleted && quote.Id == q.Id);
 
             if (quoteOld != null)
             {
@@ -67,7 +75,7 @@ namespace Quotes.Repositories
 
         public async Task DeleteQuoteAsync(Guid id)
         {
-            var quote = list.Where(quote => !quote.Deleted && quote.Id == id).FirstOrDefault();
+            var quote = _list.FirstOrDefault(quote => !quote.Deleted && quote.Id == id);
 
             if (quote != null)
             {

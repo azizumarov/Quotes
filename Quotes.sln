@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quotes.Rest", "Quotes.Rest\Quotes.Rest.csproj", "{AD8F9B8E-0D28-4DDF-8208-E412DA961BC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quotes.Rest", "Quotes.Rest\Quotes.Rest.csproj", "{AD8F9B8E-0D28-4DDF-8208-E412DA961BC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quotes.Models", "Quotes.Models\Quotes.Models.csproj", "{3983CF1F-07D1-47C1-AC81-8859E891526A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quotes.Models", "Quotes.Models\Quotes.Models.csproj", "{3983CF1F-07D1-47C1-AC81-8859E891526A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quotes.Core", "Quotes.Core\Quotes.Core.csproj", "{4DD96457-22BC-43CE-A4B1-B490EC7BAAFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quotes.Core", "Quotes.Core\Quotes.Core.csproj", "{4DD96457-22BC-43CE-A4B1-B490EC7BAAFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quotes.Repositories", "Quotes.Repositories\Quotes.Repositories.csproj", "{E3AACEF6-388E-4D32-ABF6-AEFF5B150A5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quotes.Repositories", "Quotes.Repositories\Quotes.Repositories.csproj", "{E3AACEF6-388E-4D32-ABF6-AEFF5B150A5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
