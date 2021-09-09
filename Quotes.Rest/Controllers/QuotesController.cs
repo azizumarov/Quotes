@@ -51,7 +51,7 @@ namespace Quotes.Rest.Controllers
             if (random)
             {
                 var list = quotes.ToList();
-                quotes = new List<QuoteDto>() { list.ElementAt(new Random().Next(list.Count()))};
+                quotes = new List<QuoteDto>() { list.ElementAt(new Random().Next(list.Count))};
             }
 
             return Ok(quotes);
