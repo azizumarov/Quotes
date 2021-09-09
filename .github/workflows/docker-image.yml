@@ -9,10 +9,16 @@ on:
 jobs:
 
   build:
-
+    name: Building image
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Checkout
+      uses: actions/checkout@v2
+        
+    - name: Build
+      id: buildx 
+      uses: docker/setup-buildx-action@v1
+    
+    - name: run    
+      run: docker build . --file Dockerfile --tag quotes-api:$(date +%s)
